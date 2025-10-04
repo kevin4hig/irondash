@@ -3,6 +3,7 @@ package dev.irondash.engine_context;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Keep;
@@ -24,7 +25,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.view.TextureRegistry;
 
-/** IrondashEngineContextPlugin */
+/** IrondashEngineContextPlugin - Desactivado para Android */
 // used from JNI
 @Keep
 @SuppressWarnings("UnusedDeclaration")
@@ -40,10 +41,12 @@ public class IrondashEngineContextPlugin implements FlutterPlugin, MethodCallHan
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    handle = registry.registerPlugin(this);
-    this.flutterPluginBinding = flutterPluginBinding;
-    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "dev.irondash.engine_context");
-    channel.setMethodCallHandler(this);
+    // Desactivado para Android - solo soportado en iOS
+    Log.i("IrondashEngineContext", "Plugin desactivado en Android - solo funciona en iOS");
+    // handle = registry.registerPlugin(this);
+    // this.flutterPluginBinding = flutterPluginBinding;
+    // channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "dev.irondash.engine_context");
+    // channel.setMethodCallHandler(this);
   }
 
   @Override
@@ -62,8 +65,8 @@ public class IrondashEngineContextPlugin implements FlutterPlugin, MethodCallHan
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-    channel.setMethodCallHandler(null);
-    registry.unregisterPlugin(handle);
+    // channel.setMethodCallHandler(null);
+    // registry.unregisterPlugin(handle);
   }
 
   @Override
@@ -149,7 +152,8 @@ public class IrondashEngineContextPlugin implements FlutterPlugin, MethodCallHan
 
   private static final Registry registry = new Registry();
 
-  static {
-    System.loadLibrary("irondash_engine_context_native");
-  }
+  // Carga de librería nativa desactivada para Android
+  // static {
+  //   System.loadLibrary("irondash_engine_context_native");
+  // }
 }
